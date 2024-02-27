@@ -1,6 +1,6 @@
 const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -39,8 +39,8 @@ function internData (){
         .then((data) => {
             
             console.log(data);
-            // const manager = new Manager(data.name,data.ID,data.email,data.officeNumber)
-            // team.push(manager);
+            const engineer = new Engineer(data.name,data.ID,data.email,data.school)
+            team.push(engineer);
 })
 }
 function engineerData (){
@@ -77,7 +77,7 @@ function engineerData (){
 })
 }
 
-function managerData () {
+function askUser () {
     inquirer
     .prompt([
         {
@@ -122,9 +122,12 @@ function managerData () {
     
             },])
             .then((response) => {
-                if (response.toDo === 'Add an engineer')
-                    internData()
-                    else if (response.toDo === 'Add an intern')
+                if (response.toDo === 'Add an engineer'){
+                    engineerData()}
+                    else if (response.toDo === 'Add an intern'){
+                        internData()
+                    }
+                    else return
             })
             
     })
@@ -134,7 +137,7 @@ function managerData () {
 
 
 
-    managerData();
+    askUser();
     
   
 

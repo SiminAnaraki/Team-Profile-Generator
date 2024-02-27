@@ -27,6 +27,14 @@ const internData = () => {
             type: 'input',
             message: 'What is intern\'s Email address?', 
             name: 'email',
+            validate: function(email) {
+                // Regular expression to validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(email)) {
+                    return true;
+                }
+                return 'Please enter a valid email address';
+            }
 
         },
         {
@@ -89,9 +97,9 @@ const options = () =>{
                     else if (response.toDo === 'Add an intern'){
                         internData()
                     }
-                    else  console.log(team)
-                    fs.writeFile("simin.html",render(team), (err) =>
-                    err ? console.log(err) : console.log('file has been successfully generated!'))
+                    else {
+                    fs.writeFile("team.html",render(team), (err) =>
+                    err ? console.log(err) : console.log('file has been successfully generated!'))}
             })
 
 }

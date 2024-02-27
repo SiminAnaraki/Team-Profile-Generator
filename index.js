@@ -9,7 +9,11 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
+
+// Initialize an empty array to store team members
 const team = [];
+
+// Function to gather information about an intern
 const internData = () => {
     inquirer
     .prompt([
@@ -49,6 +53,8 @@ const internData = () => {
             options()
 })
 }
+
+// Function to gather information about an engineer
 const engineerData = () => {
     inquirer
     .prompt([
@@ -81,6 +87,7 @@ const engineerData = () => {
             options()
 })
 }
+// Function to present options to the user and take necessary actions
 const options = () =>{
     inquirer
         .prompt([
@@ -98,11 +105,16 @@ const options = () =>{
                         internData()
                     }
                     else {
-                    fs.writeFile("team.html",render(team), (err) =>
-                    err ? console.log(err) : console.log('file has been successfully generated!'))}
+                        const htmlContent = render(team)
+                        if (!fs.existsSync(OUTPUT_DIR)) {
+                            fs.mkdirSync(OUTPUT_DIR);
+                        }
+                        fs.writeFile(outputPath,htmlContent, (err) =>
+                            err ? console.log(err) : console.log('file has been successfully generated!'))}
             })
 
 }
+// Function to gather information about the manager and start the application
 const askUser = () => {
     inquirer
     .prompt([
@@ -136,6 +148,7 @@ const askUser = () => {
             options()
     })
 }
+// Start the application by gathering information about the manager
     askUser();
    
     

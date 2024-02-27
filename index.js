@@ -22,7 +22,6 @@ function internData (){
             type: 'input',
             message: 'What is intern\'s ID?', 
             name: 'ID',
-
         },
         {
             type: 'input',
@@ -37,10 +36,9 @@ function internData (){
         },
     ])
         .then((data) => {
-            
-            console.log(data);
-            const engineer = new Engineer(data.name,data.ID,data.email,data.school)
-            team.push(engineer);
+            const intern = new Intern (data.name,data.ID,data.email,data.school)
+            team.push(intern);
+            options()
 })
 }
 function engineerData (){
@@ -61,7 +59,6 @@ function engineerData (){
             type: 'input',
             message: 'What is engineer\'s Email address?', 
             name: 'email',
-
         },
         {
             type: 'input',
@@ -71,12 +68,31 @@ function engineerData (){
     ])
         .then((data) => {
             
-            console.log(data);
-            // const manager = new Manager(data.name,data.ID,data.email,data.officeNumber)
-            // team.push(manager);
+            const enginner = new Engineer(data.name,data.ID,data.email,data.github)
+            team.push(enginner);
+            options()
 })
 }
+function options(){
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                message: 'What is next step?', 
+                name: 'toDo',
+                choices: ['Add an engineer','Add an intern','Finish building the team'],
+    
+            },])
+            .then((response) => {
+                if (response.toDo === 'Add an engineer'){
+                    engineerData()}
+                    else if (response.toDo === 'Add an intern'){
+                        internData()
+                    }
+                    else  console.log(team)
+            })
 
+}
 function askUser () {
     inquirer
     .prompt([
@@ -95,7 +111,6 @@ function askUser () {
             type: 'input',
             message: 'What is manager\'s Email address?', 
             name: 'email',
-
         },
         {
             type: 'input',
@@ -105,39 +120,17 @@ function askUser () {
     ])
         .then((data) => {
             
-            console.log(data);
             const manager = new Manager(data.name,data.ID,data.email,data.officeNumber)
             team.push(manager);
-            console.log(manager)
-            console.log(team)
-    
-    
-        inquirer
-        .prompt([
-            {
-                type: 'list',
-                message: 'What is next step?', 
-                name: 'toDo',
-                choices: ['Add an engineer','Add an intern','Finish building the team'],
-    
-            },])
-            .then((response) => {
-                if (response.toDo === 'Add an engineer'){
-                    engineerData()}
-                    else if (response.toDo === 'Add an intern'){
-                        internData()
-                    }
-                    else return
-            })
+            options()
             
     })
     
 
 }
 
-
-
     askUser();
+   
     
   
 

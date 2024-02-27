@@ -10,7 +10,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 const team = [];
-function internData (){
+const internData = () => {
     inquirer
     .prompt([
         {
@@ -41,7 +41,7 @@ function internData (){
             options()
 })
 }
-function engineerData (){
+const engineerData = () => {
     inquirer
     .prompt([
         {
@@ -73,7 +73,7 @@ function engineerData (){
             options()
 })
 }
-function options(){
+const options = () =>{
     inquirer
         .prompt([
             {
@@ -90,10 +90,12 @@ function options(){
                         internData()
                     }
                     else  console.log(team)
+                    fs.writeFile("simin.html",render(team), (err) =>
+                    err ? console.log(err) : console.log('file has been successfully generated!'))
             })
 
 }
-function askUser () {
+const askUser = () => {
     inquirer
     .prompt([
         {
@@ -121,14 +123,11 @@ function askUser () {
         .then((data) => {
             
             const manager = new Manager(data.name,data.ID,data.email,data.officeNumber)
+            manager.getName()
             team.push(manager);
             options()
-            
     })
-    
-
 }
-
     askUser();
    
     
